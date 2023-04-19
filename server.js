@@ -2,11 +2,9 @@ const express = require("express");
 const path = require("path");
 const session = require("express-session");
 const exphbs = require("express-handlebars");
-
 const helpers = require("./utils/helpers");
-
-const sequelize = require("./config/connection");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
+const sequelize = require("./config/connection"); // Add this line
 const app = express();
 
 // Set up Handlebars.js engine with custom helpers
@@ -40,12 +38,9 @@ app.use("/public", express.static(path.join(__dirname, "public")));
 
 // Routes
 const homeRoutes = require("./controllers/home-routes");
-const blogRoutes = require("./controllers/api/blog-routes");
-const userRoutes = require("./controllers/api/user-routes");
 
 app.use("/", homeRoutes);
-app.use("/blog", blogRoutes);
-app.use("/user", userRoutes);
+app.use("/api", require("./controllers/api")); // Change this line
 
 // Error handling middleware
 app.use((err, req, res, next) => {
