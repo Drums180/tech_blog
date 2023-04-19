@@ -1,0 +1,73 @@
+<section class="hero is-primary">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        Tech Blog
+      </h1>
+      <h2 class="subtitle">
+        A place for developers to share their thoughts
+      </h2>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="columns">
+    <div class="column is-three-quarters">
+      {{#each posts}}
+      <div class="card my-4">
+        <div class="card-content">
+          <div class="media">
+            <div class="media-content">
+              <p class="title is-4">{{title}}</p>
+              <p class="subtitle is-6">By {{user.username}} on {{formattedDate createdAt}}</p>
+            </div>
+          </div>
+
+          <div class="content">
+            {{body}}
+          </div>
+        </div>
+        <div class="card-content comment-form">
+          <form>
+            <div class="field is-grouped">
+              <div class="control is-expanded">
+                <input class="input" type="text" placeholder="Type your comment...">
+              </div>
+              <div class="control">
+                <button class="button is-primary is-small" type="submit" data-post-id="{{id}}">Submit Comment</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    <div class="column">
+      <div class="card my-4">
+        <div class="card-content">
+          <h2 class="subtitle is-4">Latest Comments</h2>
+          {{#each comments}}
+          <div class="content">
+            <p><strong>{{user.username}}</strong> on {{formattedDate createdAt}}</p>
+            <p>{{content}}</p>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/public/js/home.js"></script>
+
+<script>
+  // Format dates as "MM/DD/YYYY" string
+  Handlebars.registerHelper("formattedDate", function(date) {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${month}/${day}/${year}`;
+  });
+</script>

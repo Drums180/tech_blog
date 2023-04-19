@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/public/css/style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
+  </head>
+  <body>
+    <nav class="navbar is-primary">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+          <img src="/public/images/logo.png" alt="Tech Blog" style="max-width: 200px;">
+        </a>
+        <div class="navbar-burger burger" data-target="navbarMenu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <div id="navbarMenu" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="/">Home</a>
+          <a class="navbar-item" href="/dashboard">Dashboard</a>
+        </div>
+        <div class="navbar-end">
+          {{#if loggedIn}}
+            <div class="navbar-item">
+              <div class="buttons">
+                <a class="button is-light" href="/logout">Logout</a>
+              </div>
+            </div>
+          {{else}}
+            <div class="navbar-item">
+              <div class="buttons">
+                <a class="button is-primary" href="/login">Login</a>
+              </div>
+            </div>
+          {{/if}}
+        </div>
+      </div>
+    </nav>
+    <section class="section">
+      <div class="container">
+        {{{body}}}
+      </div>
+    </section>
+  </body>
+</html>
