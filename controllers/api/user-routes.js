@@ -4,6 +4,9 @@ const { User } = require("../../models");
 // Create a new user
 router.post("/", async (req, res) => {
   try {
+    console.log("Creating a new user"); // Add this line
+    console.log("Request body:", req.body); // Add this line
+
     const dbUserData = await User.create({
       username: req.body.username,
       password: req.body.password,
@@ -15,7 +18,7 @@ router.post("/", async (req, res) => {
       res.status(200).json(dbUserData);
     });
   } catch (err) {
-    console.log(err);
+    console.log("Error while creating a new user:", err); // Add this line
     res.status(500).json(err);
   }
 });
@@ -23,6 +26,9 @@ router.post("/", async (req, res) => {
 // Login user
 router.post("/login", async (req, res) => {
   try {
+    console.log("Logging in"); // Add this line
+    console.log("Request body:", req.body); // Add this line
+
     const dbUserData = await User.findOne({
       where: {
         username: req.body.username,
@@ -52,7 +58,7 @@ router.post("/login", async (req, res) => {
         .json({ user: dbUserData, message: "You are now logged in!" });
     });
   } catch (err) {
-    console.log(err);
+    console.log("Error while logging in:", err); // Add this line
     res.status(500).json(err);
   }
 });
