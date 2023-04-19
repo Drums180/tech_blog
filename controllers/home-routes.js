@@ -42,6 +42,18 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/dashboard", withAuth, async (req, res) => {
+  try {
+    // Add any additional logic here if necessary, e.g., fetching data from the database
+
+    res.render("dashboard", {
+      logged_in: req.session.logged_in,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // GET route for login page
 router.get("/login", (req, res) => {
   if (req.session.logged_in) {
