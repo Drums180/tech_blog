@@ -3,8 +3,8 @@ const Comment = require("./Comment");
 const User = require("./User");
 
 // Define the one-to-many relationship between User and Post
-User.hasMany(Post, { foreignKey: "user_id" });
-Post.belongsTo(User, { foreignKey: "user_id" });
+User.hasMany(Post, { foreignKey: "author_id" });
+Post.belongsTo(User, { foreignKey: "author_id" });
 
 // Define the one-to-many relationship between User and Comment
 User.hasMany(Comment, { foreignKey: "author_id" });

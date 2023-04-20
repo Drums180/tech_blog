@@ -31,7 +31,7 @@ Post.init(
         model: "user",
         key: "id",
       },
-      defaultValue: 1, // replace 1 with the default author ID you want to use
+      defaultValue: 1,
     },
   },
   {
