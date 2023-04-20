@@ -28,7 +28,9 @@
           {{#if loggedIn}}
             <div class="navbar-item">
               <div class="buttons">
-                <a class="button is-light" href="/logout">Logout</a>
+                <form action="/api/users/logout" method="POST">
+                  <button class="button is-light" type="submit">Logout</button>
+                </form>
               </div>
             </div>
           {{else}}

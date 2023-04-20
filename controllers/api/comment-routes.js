@@ -4,7 +4,9 @@ const { Comment } = require("../../models");
 // Get all comments
 router.get("/", async (req, res) => {
   try {
-    const comments = await Comment.findAll();
+    const comments = await Comment.findAll({
+      include: { model: User, attributes: ["username"] }, // Add this line
+    });
     res.json(comments);
   } catch (err) {
     console.error(err);
@@ -37,7 +39,7 @@ router.delete("/:id", async (req, res) => {
     const comment = await Comment.destroy({
       where: {
         id: req.params.id,
-        user_id: req.session.user_id,
+        author_id: req.session.user_id,
       },
     });
     if (!comment) {

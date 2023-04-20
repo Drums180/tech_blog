@@ -5,7 +5,6 @@ const withAuth = require("../utils/auth");
 
 // GET route for home page
 router.get("/", async (req, res) => {
-  // Removed withAuth middleware
   try {
     const postData = await Post.findAll({
       include: [
@@ -35,7 +34,7 @@ router.get("/", async (req, res) => {
     console.log("Comments:");
     console.log(JSON.stringify(comments, null, 2));
 
-    res.render("home", { posts, comments });
+    res.render("home", { posts, comments, loggedIn: req.session.logged_in });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);

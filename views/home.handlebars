@@ -25,14 +25,14 @@
           </div>
 
           <div class="content">
-            {{body}}
-          </div>
+            {{content}}
+            </div>
         </div>
         <div class="card-content comment-form">
           <form>
             <div class="field is-grouped">
               <div class="control is-expanded">
-                <input class="input" type="text" placeholder="Type your comment...">
+                <input class="input" type="text" placeholder="Type your comment..." data-post-id="{{id}}">
               </div>
               <div class="control">
                 <button class="button is-primary is-small" type="submit" data-post-id="{{id}}">Submit Comment</button>

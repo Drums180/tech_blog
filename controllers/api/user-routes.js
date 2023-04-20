@@ -4,8 +4,8 @@ const { User } = require("../../models");
 // Create a new user
 router.post("/", async (req, res) => {
   try {
-    console.log("Creating a new user"); // Add this line
-    console.log("Request body:", req.body); // Add this line
+    console.log("Creating a new user");
+    console.log("Request body:", req.body);
 
     const dbUserData = await User.create({
       username: req.body.username,
@@ -14,11 +14,11 @@ router.post("/", async (req, res) => {
 
     req.session.save(() => {
       req.session.logged_in = true;
-
+      req.session.user_id = dbUserData.id;
       res.status(200).json(dbUserData);
     });
   } catch (err) {
-    console.log("Error while creating a new user:", err); // Add this line
+    console.log("Error while creating a new user:", err);
     res.status(500).json(err);
   }
 });
@@ -26,8 +26,8 @@ router.post("/", async (req, res) => {
 // Login user
 router.post("/login", async (req, res) => {
   try {
-    console.log("Logging in"); // Add this line
-    console.log("Request body:", req.body); // Add this line
+    console.log("Logging in");
+    console.log("Request body:", req.body);
 
     const dbUserData = await User.findOne({
       where: {
@@ -53,21 +53,22 @@ router.post("/login", async (req, res) => {
 
     req.session.save(() => {
       req.session.logged_in = true;
+      req.session.user_id = dbUserData.id;
       res
         .status(200)
         .json({ user: dbUserData, message: "You are now logged in!" });
     });
   } catch (err) {
-    console.log("Error while logging in:", err); // Add this line
+    console.log("Error while logging in:", err);
     res.status(500).json(err);
   }
 });
 
 // Logout user
-router.post("/logout", (req, res) => {
-  if (req.session.loggedIn) {
+router.get("/logout", (req, res) => {
+  if (req.session.logged_in) {
     req.session.destroy(() => {
-      res.status(204).end();
+      res.redirect("/");
     });
   } else {
     res.status(404).end();

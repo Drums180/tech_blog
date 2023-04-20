@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const { Post, User } = require("../../models");
+const withAuth = require("../../utils/auth");
 
 // GET all blog posts
 router.get("/", async (req, res) => {
@@ -46,18 +47,15 @@ router.get("/blogPost/:id", async (req, res) => {
   }
 });
 
-// CREATE a new blog post
-router.post("/", async (req, res) => {
+// Create a new post
+router.post("/", withAuth, async (req, res) => {
   try {
-    const blogPostData = await Post.create({
-      title: req.body.title,
-      content: req.body.content,
-      user_id: req.session.userId,
+    const postData = await Post.create({
+      ...req.body,
+      user_id: req.session.user_id,
     });
-
-    res.status(200).json(blogPostData);
+    res.redirect("/");
   } catch (err) {
-    console.log(err);
     res.status(500).json(err);
   }
 });
