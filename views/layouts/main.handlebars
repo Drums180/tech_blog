@@ -6,6 +6,7 @@
     <title>{{title}}</title>
     <link rel="stylesheet" href="/public/css/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
+    <script defer src="/public/js/logout.js"></script>
   </head>
   <body>
     <nav class="navbar is-primary">
@@ -28,9 +29,7 @@
           {{#if loggedIn}}
             <div class="navbar-item">
               <div class="buttons">
-                <form action="/api/users/logout" method="POST">
-                  <button class="button is-light" type="submit">Logout</button>
-                </form>
+                <button id="logout-btn" class="button is-light">Logout</button>
               </div>
             </div>
           {{else}}
