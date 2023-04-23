@@ -35,7 +35,7 @@ router.get("/:id/edit", withAuth, async (req, res) => {
       return;
     }
 
-    if (postData.user_id !== req.session.user_id) {
+    if (postData.User.id !== req.session.user_id) {
       res
         .status(403)
         .json({ message: "You do not have permission to edit this post." });
@@ -54,7 +54,6 @@ router.get("/:id/edit", withAuth, async (req, res) => {
   }
 });
 
-// Create a new post
 // Create a new post
 router.post("/", withAuth, async (req, res) => {
   try {
@@ -96,6 +95,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // DELETE a blog post
+// DELETE a blog post
 router.delete("/:id", withAuth, async (req, res) => {
   try {
     const postData = await Post.findByPk(req.params.id);
@@ -105,7 +105,7 @@ router.delete("/:id", withAuth, async (req, res) => {
       return;
     }
 
-    if (postData.user_id !== req.session.user_id) {
+    if (postData.author_id !== req.session.user_id) {
       res
         .status(403)
         .json({ message: "You do not have permission to delete this post." });
