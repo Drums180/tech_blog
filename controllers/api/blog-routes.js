@@ -55,13 +55,14 @@ router.get("/:id/edit", withAuth, async (req, res) => {
 });
 
 // Create a new post
+// Create a new post
 router.post("/", withAuth, async (req, res) => {
   try {
     const postData = await Post.create({
       ...req.body,
-      user_id: req.session.user_id,
+      author_id: req.session.user_id,
     });
-    res.redirect("/");
+    res.redirect("/"); // Redirect to the home page
   } catch (err) {
     res.status(500).json(err);
   }
