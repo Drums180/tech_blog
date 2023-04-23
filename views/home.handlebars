@@ -26,7 +26,18 @@
 
           <div class="content">
             {{content}}
+          </div>
+          
+          {{!-- Display comments for each post --}}
+          <div class="comments">
+            {{#each comments}}
+            <div class="content">
+              <p><strong>{{user.username}}</strong> on {{formattedDate createdAt}}</p>
+              <p>{{content}}</p>
             </div>
+            {{/each}}
+          </div>
+          
         </div>
         <div class="card-content comment-form">
           <form>
@@ -42,19 +53,6 @@
         </div>
       </div>
       {{/each}}
-    </div>
-    <div class="column">
-      <div class="card my-4">
-        <div class="card-content">
-          <h2 class="subtitle is-4">Latest Comments</h2>
-          {{#each comments}}
-          <div class="content">
-            <p><strong>{{user.username}}</strong> on {{formattedDate createdAt}}</p>
-            <p>{{content}}</p>
-          </div>
-          {{/each}}
-        </div>
-      </div>
     </div>
   </div>
 </div>
