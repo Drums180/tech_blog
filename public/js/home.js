@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (response.ok) {
           document.location.reload();
         } else {
-          alert("Failed to create comment");
+          alert("Please login");
         }
       }
     });

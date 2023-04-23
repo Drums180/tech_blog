@@ -43,9 +43,24 @@ router.get("/", async (req, res) => {
 
 router.get("/dashboard", withAuth, async (req, res) => {
   try {
-    // Add any additional logic here if necessary, e.g., fetching data from the database
+    // Fetch the user's posts
+    const postData = await Post.findAll({
+      where: {
+        user_id: req.session.user_id,
+      },
+      include: [
+        {
+          model: User,
+          attributes: ["username"],
+        },
+      ],
+      order: [["createdAt", "DESC"]],
+    });
+
+    const posts = postData.map((post) => post.get({ plain: true }));
 
     res.render("dashboard", {
+      posts,
       logged_in: req.session.logged_in,
     });
   } catch (err) {

@@ -24,22 +24,29 @@ router.get("/", async (req, res) => {
 });
 
 // GET one blog post by id
-router.get("/blogPost/:id", async (req, res) => {
+router.get("/:id/edit", withAuth, async (req, res) => {
   try {
-    const blogPostData = await Post.findByPk(req.params.id, {
+    const postData = await Post.findByPk(req.params.id, {
       include: [{ model: User }],
     });
 
-    if (!blogPostData) {
+    if (!postData) {
       res.status(404).json({ message: "No blog post found with this id!" });
       return;
     }
 
-    const blogPost = blogPostData.get({ plain: true });
+    if (postData.user_id !== req.session.user_id) {
+      res
+        .status(403)
+        .json({ message: "You do not have permission to edit this post." });
+      return;
+    }
 
-    res.render("blogPost", {
-      blogPost,
-      loggedIn: req.session.loggedIn,
+    const post = postData.get({ plain: true });
+
+    res.render("editPost", {
+      post,
+      loggedIn: req.session.logged_in,
     });
   } catch (err) {
     console.log(err);
@@ -88,18 +95,23 @@ router.put("/:id", async (req, res) => {
 });
 
 // DELETE a blog post
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", withAuth, async (req, res) => {
   try {
-    const blogPostData = await Post.destroy({
-      where: {
-        id: req.params.id,
-      },
-    });
+    const postData = await Post.findByPk(req.params.id);
 
-    if (!blogPostData) {
+    if (!postData) {
       res.status(404).json({ message: "No blog post found with this id!" });
       return;
     }
+
+    if (postData.user_id !== req.session.user_id) {
+      res
+        .status(403)
+        .json({ message: "You do not have permission to delete this post." });
+      return;
+    }
+
+    await postData.destroy();
 
     res.status(200).json({ message: "Blog post deleted!" });
   } catch (err) {
