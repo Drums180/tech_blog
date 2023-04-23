@@ -13,7 +13,7 @@
 
 <div class="container">
   <div class="columns">
-    <div class="column is-three-quarters">
+    <div class="column is-full">
       {{#each posts}}
       <div class="card my-4">
         <div class="card-content">
@@ -28,12 +28,13 @@
             {{content}}
           </div>
           
-          {{!-- Display comments for each post --}}
-          <div class="comments">
+          {{!-- Display comments for each post with a different format --}}
+          <div class="comments mt-4">
+            <h3 class="subtitle is-6">Comments:</h3>
             {{#each comments}}
             <div class="content">
-              <p><strong>{{user.username}}</strong> on {{formattedDate createdAt}}</p>
-              <p>{{content}}</p>
+              <p><strong>{{user.username}}</strong> on {{formattedDate createdAt}}:</p>
+              <blockquote class="blockquote pl-4">{{content}}</blockquote>
             </div>
             {{/each}}
           </div>
