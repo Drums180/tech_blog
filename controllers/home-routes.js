@@ -46,7 +46,7 @@ router.get("/dashboard", withAuth, async (req, res) => {
     // Fetch the user's posts
     const postData = await Post.findAll({
       where: {
-        user_id: req.session.user_id,
+        author_id: req.session.user_id,
       },
       include: [
         {
