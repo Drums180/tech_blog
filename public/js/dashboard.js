@@ -1,19 +1,23 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const deleteButtons = document.querySelectorAll(".delete-post");
+  const deletePostHandler = async (event) => {
+    event.preventDefault();
 
-  deleteButtons.forEach((button) => {
-    button.addEventListener("click", async (event) => {
-      const postId = event.target.getAttribute("data-id");
-      const response = await fetch(`/api/post/${postId}`, {
-        method: "DELETE",
-      });
+    const postId = event.target.getAttribute("data-id");
 
-      if (response.ok) {
-        alert("Post deleted successfully");
-        document.location.reload();
-      } else {
-        alert("Failed to delete the post");
-      }
+    const response = await fetch(`/api/post/${postId}/delete`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
     });
+
+    if (response.ok) {
+      alert("Post deleted successfully.");
+      document.location.replace("/dashboard");
+    } else {
+      alert("Failed to delete post.");
+    }
+  };
+
+  document.querySelectorAll(".delete-post").forEach((btn) => {
+    btn.addEventListener("click", deletePostHandler);
   });
 });
