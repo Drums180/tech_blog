@@ -98,7 +98,6 @@ router.put("/:id", async (req, res) => {
 });
 
 // DELETE a blog post
-// DELETE a blog post
 router.delete("/:id", withAuth, async (req, res) => {
   try {
     const postData = await Post.findByPk(req.params.id);
@@ -117,9 +116,8 @@ router.delete("/:id", withAuth, async (req, res) => {
 
     await postData.destroy();
 
-    res
-      .status(200)
-      .json({ message: "Blog post deleted!", redirectTo: "/dashboard" });
+    // Only call res.json() once
+    res.json({ message: "Blog post deleted!" });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
