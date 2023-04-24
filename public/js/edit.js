@@ -18,6 +18,8 @@ updateForm.addEventListener("submit", async (e) => {
     if (!response.ok) {
       throw new Error("Failed to update post.");
     }
+
+    console.log("update sucessful");
     location.href = "/";
   } catch (err) {
     console.log(err);

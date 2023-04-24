@@ -55,9 +55,7 @@ router.put("/:id", async (req, res) => {
       res.status(404).json({ message: "No blog post found with this id!" });
       return;
     }
-
-    // Redirect to the home page after updating the post
-    res.redirect("/");
+    res.status(200).json({ message: "Blog post updated!" }); // Add this line to send a response after the successful update
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
