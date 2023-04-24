@@ -44,9 +44,12 @@ router.get("/:id/edit", withAuth, async (req, res) => {
 
     const post = postData.get({ plain: true });
 
+    console.log("Post data:", post); // Log the post data
+    console.log("Logged in:", req.session.loggedIn); // Log the loggedIn status
+
     res.render("editPost", {
       post,
-      loggedIn: req.session.logged_in,
+      loggedIn: req.session.loggedIn,
     });
   } catch (err) {
     console.log(err);
@@ -114,7 +117,9 @@ router.delete("/:id", withAuth, async (req, res) => {
 
     await postData.destroy();
 
-    res.status(200).json({ message: "Blog post deleted!" });
+    res
+      .status(200)
+      .json({ message: "Blog post deleted!", redirectTo: "/dashboard" });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);

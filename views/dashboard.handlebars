@@ -34,7 +34,7 @@
           <nav class="level is-mobile">
             <div class="level-left">
               <a class="level-item" href="/api/post/{{id}}/edit">
-                <span class="icon is-small"><i class="fas fa-edit"></i></span> Edit
+                <button class="button is-link edit-post" data-id="{{id}}">Edit</button>
               </a>
               <a class="level-item" href="/api/post/{{id}}/delete" onclick="return confirm('Are you sure you want to delete this post?');">
                 <button class="button is-danger delete-post" data-id="{{id}}">Delete</button>

@@ -1,23 +1,34 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const deletePostHandler = async (event) => {
-    event.preventDefault();
+  const deleteButtons = document.querySelectorAll(".delete-post");
 
-    const postId = event.target.getAttribute("data-id");
+  deleteButtons.forEach((button) => {
+    button.addEventListener("click", async (event) => {
+      const postId = event.target.getAttribute("data-id");
+      const response = await fetch(`/api/post/${postId}`, {
+        method: "DELETE",
+      });
 
-    const response = await fetch(`/api/post/${postId}/delete`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
+      if (response.ok) {
+        const data = await response.json();
+        if (data.redirectTo) {
+          document.location.replace(data.redirectTo);
+        } else {
+          alert("Post deleted successfully");
+          document.location.reload();
+        }
+      } else {
+        alert("Failed to delete the post");
+      }
     });
 
-    if (response.ok) {
-      alert("Post deleted successfully.");
-      document.location.replace("/dashboard");
-    } else {
-      alert("Failed to delete post.");
-    }
-  };
+    const editButtons = document.querySelectorAll(".edit-post");
 
-  document.querySelectorAll(".delete-post").forEach((btn) => {
-    btn.addEventListener("click", deletePostHandler);
+    editButtons.forEach((button) => {
+      button.addEventListener("click", async (event) => {
+        event.preventDefault(); // Prevent the default behavior of the anchor tag
+        const postId = event.target.closest("button").getAttribute("data-id");
+        document.location.replace(`api/post/${postId}/edit`); // Update the route here
+      });
+    });
   });
 });
