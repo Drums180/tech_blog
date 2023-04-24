@@ -20,15 +20,5 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Failed to delete the post");
       }
     });
-
-    const editButtons = document.querySelectorAll(".edit-post");
-
-    editButtons.forEach((button) => {
-      button.addEventListener("click", async (event) => {
-        event.preventDefault(); // Prevent the default behavior of the anchor tag
-        const postId = event.target.closest("button").getAttribute("data-id");
-        document.location.replace(`api/post/${postId}/edit`); // Update the route here
-      });
-    });
   });
 });

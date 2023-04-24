@@ -23,40 +23,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// GET one blog post by id
-router.get("/:id/edit", withAuth, async (req, res) => {
-  try {
-    const postData = await Post.findByPk(req.params.id, {
-      include: [{ model: User }],
-    });
-
-    if (!postData) {
-      res.status(404).json({ message: "No blog post found with this id!" });
-      return;
-    }
-
-    if (postData.User.id !== req.session.user_id) {
-      res
-        .status(403)
-        .json({ message: "You do not have permission to edit this post." });
-      return;
-    }
-
-    const post = postData.get({ plain: true });
-
-    console.log("Post data:", post); // Log the post data
-    console.log("Logged in:", req.session.loggedIn); // Log the loggedIn status
-
-    res.render("editPost", {
-      post,
-      loggedIn: req.session.loggedIn,
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
-  }
-});
-
 // Create a new post
 router.post("/", withAuth, async (req, res) => {
   try {
@@ -90,7 +56,8 @@ router.put("/:id", async (req, res) => {
       return;
     }
 
-    res.status(200).json({ message: "Blog post updated!" });
+    // Redirect to the home page after updating the post
+    res.redirect("/");
   } catch (err) {
     console.log(err);
     res.status(500).json(err);

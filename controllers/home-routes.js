@@ -61,7 +61,39 @@ router.get("/dashboard", withAuth, async (req, res) => {
 
     res.render("dashboard", {
       posts,
-      logged_in: req.session.logged_in,
+      loggedIn: req.session.logged_in,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// GET route for edit post page
+router.get("/edit/:id", withAuth, async (req, res) => {
+  try {
+    const postData = await Post.findByPk(req.params.id, {
+      include: [
+        {
+          model: User,
+          attributes: ["username"],
+        },
+        {
+          model: Comment,
+          include: { model: User, attributes: ["username"] },
+        },
+      ],
+    });
+
+    if (!postData) {
+      res.status(404).json({ message: "No post found with this id" });
+      return;
+    }
+
+    const post = postData.get({ plain: true });
+
+    res.render("editPost", {
+      post,
+      loggedIn: req.session.logged_in,
     });
   } catch (err) {
     res.status(500).json(err);
